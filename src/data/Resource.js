@@ -142,3 +142,21 @@ var sound_res = {   // not use
 	timeover_mp3 : "assests/game/golddigger/media/timeover.mp3",
 	treasure_mp3 : "assests/game/golddigger/media/treasure.mp3",
 };
+
+
+var battle_res = {
+	map_background_0000 : "assests/game/map/map_background_0000.png",
+	map_background_0003 : "assests/game/map/map_background_0003.png",
+	map_cell_0002 : "assests/game/map/map_cell_0002.png",
+    
+	map_decoration_0001 : "assests/game/map/map_decoration_0001.png",
+	map_decoration_0002 : "assests/game/map/map_decoration_0002.png",
+	map_decoration_tree_0001 : "assests/game/map/map_decoration_tree_0001.png",
+	map_decoration_tree_0002 : "assests/game/map/map_decoration_tree_0002.png",
+	map_decoration_tree_0003 : "assests/game/map/map_decoration_tree_0003.png",
+	map_decoration_tree_0004 : "assests/game/map/map_decoration_tree_0004.png",
+    
+	map_house : "assests/game/map/map_house.png",
+	map_monster_gate_player : "assests/game/map/map_monster_gate_player.png",
+	map_river_0000 : "assests/game/map/map_river_0000.png",
+};
