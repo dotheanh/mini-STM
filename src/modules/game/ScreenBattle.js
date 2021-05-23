@@ -47,6 +47,7 @@ var ScreenBattle = cc.Layer.extend({
     initTheGame: function() {   // init các giá trị, hiển thị hình ảnh trước khi vào game
         this.drawBackgroundMap();
         this.generateTopographic();
+        this.generateMonsters();
 
         cc.eventManager.removeAllListeners();
         // add click listener to start game
@@ -150,6 +151,32 @@ var ScreenBattle = cc.Layer.extend({
     },
     checkSideBySideCell: function(cellIndex1, cellIndex2) {
         return (cellIndex2 === cellIndex1 + 1 || cellIndex2 === cellIndex1 - 1 || cellIndex2 === cellIndex1 + this.cellsInARow || cellIndex2 === cellIndex1 - this.cellsInARow);
+    },
+    generateMonsters:function()
+    {
+        const cThis = this;
+        var interval = setInterval(function () {
+            var monst;
+            var monsterPos = 0;
+            var monsterType = randomInt(1,4);
+            var xPos = cThis._utility.convertCellIndexToCoord(monsterPos).x;
+            var yPos = cThis._utility.convertCellIndexToCoord(monsterPos).y;
+            switch (monsterType) {
+                case 1: 
+                    monst = new Assassin(xPos, yPos, 1, cThis.SCALE_RATE);
+                    break;
+                case 2: 
+                    monst = new DarkGiant(xPos, yPos, 1, cThis.SCALE_RATE);
+                    break;
+                case 3: 
+                    monst = new Iceman(xPos, yPos, 1, cThis.SCALE_RATE);
+                    break;
+                case 4: 
+                    monst = new Bat(xPos, yPos, 1, cThis.SCALE_RATE);
+                    break;
+            }
+            cThis.addChild(monst._img);
+        }, 1000);
     },
     onStartGame:function()
     {

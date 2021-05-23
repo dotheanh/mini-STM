@@ -41,6 +41,7 @@
         "src/modules/mainmenu/ScreenMenu.js",
         "src/modules/game/ScreenGame.js",
         "src/modules/game/Topographic.js",
+        "src/modules/game/Monster.js",
         "src/modules/game/ScreenBattle.js",
         "src/modules/game/Utility.js",
         "src/modules/testnetwork/network/Network.js",

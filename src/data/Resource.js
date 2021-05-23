@@ -165,4 +165,9 @@ var battle_res = {
     map_forest_obstacle_1: "assests/game/map/map_forest_obstacle_1.png",
     
     map_decoration_grass_0000: "assests/game/map/map_decoration_grass_0000.png",
+
+    monster_assassin_run_0000: "assests/game/monster/frame/assassin/monster_assassin_run_0000.png",
+    monster_dark_giant_run_0000: "assests/game/monster/frame/dark_giant/monster_dark_giant_run_0000.png",
+    monster_iceman_run_0000: "assests/game/monster/frame/iceman/monster_iceman_run_0000.png",
+    monster_bat_run_0000: "assests/game/monster/frame/bat/monster_bat_run_0000.png",
 };
