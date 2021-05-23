@@ -19,7 +19,7 @@ function getItemImgUrl(itemType) {
         }
         else return true;
     })
-    return "assests/game/images/"+ imgName + ".png";
+    return "assests/game/golddigger/images/"+ imgName + ".png";
 }
 function getItemSpeed(itemType) {
     let speed = 0;
@@ -92,7 +92,7 @@ var ScreenGame = cc.Layer.extend({
         this.initClawX = (this.scrSize.width - 220)/2;
         this.initClawY = this.scrSize.height - this.scrSize.height*0.16;
         // add background
-        this.background = cc.Sprite.create("assests/game/images/background-sheet0.png");
+        this.background = cc.Sprite.create("assests/game/golddigger/images/background-sheet0.png");
         // SCALE RATE
         this.SCALE_RATE = this.scrSize.width/this.background.getContentSize().width;
         this.background.setScale(this.SCALE_RATE);
@@ -117,7 +117,7 @@ var ScreenGame = cc.Layer.extend({
 
 
         // add character excavator
-        this.character = cc.Sprite.create("assests/game/images/excavator-sheet0.png", cc.rect(0,0,512,180));
+        this.character = cc.Sprite.create("assests/game/golddigger/images/excavator-sheet0.png", cc.rect(0,0,512,180));
         this.character.attr({x: (this.scrSize.width - 220)/2-10, y: this.scrSize.height - this.scrSize.height*0.24});
         this.character.setAnchorPoint(0,0.5);
         this.addChild(this.character);
@@ -614,13 +614,13 @@ var ScreenGame = cc.Layer.extend({
         this.btnMute.setVisible(true);
     },
     checkSystemAndPlaySound: function(soundName, isLoop = false) {
-        let soundFile_ogg = "assests/game/media/" + soundName + ".ogg";
-        let soundFile_mp3 = "assests/game/media/" + soundName + ".mp3";
+        let soundFile_ogg = "assests/game/golddigger/media/" + soundName + ".ogg";
+        let soundFile_mp3 = "assests/game/golddigger/media/" + soundName + ".mp3";
         if (this.sound)
             cc.audioEngine.playMusic(cc.sys.os == cc.sys.OS_WP8 || cc.sys.os == cc.sys.OS_WINRT ? soundFile_ogg : soundFile_mp3, isLoop);
     },
     addSprite: function(imgName, xPos, yPos, zOrder = 0, scaleRate = this.SCALE_RATE) {
-        sprite = cc.Sprite.create("assests/game/images/" + imgName + ".png");
+        sprite = cc.Sprite.create("assests/game/golddigger/images/" + imgName + ".png");
         sprite.setScale(scaleRate);
         sprite.attr({ x: xPos, y: yPos });
         sprite.setLocalZOrder(zOrder);
