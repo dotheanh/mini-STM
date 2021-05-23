@@ -86,10 +86,12 @@ var ScreenBattle = cc.Layer.extend({
         this.addSprite(battle_res.map_decoration_0001, this.scrSize.width*0.03, this.mapStartY*0.5);
         this.addSprite(battle_res.map_decoration_tree_0002, this.scrSize.width*0.05, this.mapStartY*0.3);
         this.addSprite(battle_res.map_decoration_tree_0001, this.scrSize.width*0.05, this.mapStartY*0.2);
+        this.addSprite(battle_res.map_decoration_0002, this.scrSize.width, this.scrSize.height*0.9);
         this.addSprite(battle_res.map_decoration_tree_0003, this.scrSize.width*0.05, this.mapStartY*0.1);
-        this.addSprite(battle_res.map_decoration_tree_0001, this.scrSize.width*0.95, this.mapStartY);
+        this.addSprite(battle_res.map_decoration_tree_0001, this.scrSize.width*0.95, this.mapStartY*1.1);
+        this.addSprite(battle_res.map_decoration_tree_0002, this.scrSize.width*0.95, this.mapStartY*0.95);
         this.addSprite(battle_res.map_decoration_tree_0003, this.scrSize.width*0.95, this.mapStartY*0.85);
-        this.addSprite(battle_res.map_decoration_0002, this.scrSize.width*0.9, this.mapStartY*0.7);
+        this.addSprite(battle_res.map_decoration_tree_0001, this.scrSize.width*0.95, this.mapStartY*0.7);
         this.addSprite(battle_res.map_decoration_tree_0002, this.scrSize.width*0.95, this.mapStartY*0.6);
         this.addSprite(battle_res.map_decoration_tree_0001, this.scrSize.width*0.95, this.mapStartY*0.5);
         this.addSprite(battle_res.map_decoration_tree_0003, this.scrSize.width*0.95, this.mapStartY*0.4);
