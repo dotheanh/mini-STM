@@ -36,6 +36,9 @@ var ScreenBattle = cc.Layer.extend({
         this.background.attr({ x: this.scrSize.width/2, y: this.scrSize.height/2 });
         this.background.setLocalZOrder(0);
         this.addChild(this.background);
+        this.cellsInARow = 7;
+        this.cellsInACol = 7;
+        this.totalCells = this.cellsInARow*this.cellsInACol;
 
         this.initTheGame();
 
@@ -43,6 +46,7 @@ var ScreenBattle = cc.Layer.extend({
     },
     initTheGame: function() {   // init các giá trị, hiển thị hình ảnh trước khi vào game
         this.drawBackgroundMap();
+        this.generateTopographic();
 
         cc.eventManager.removeAllListeners();
         // add click listener to start game
@@ -71,8 +75,8 @@ var ScreenBattle = cc.Layer.extend({
         this.mapStartY = this.scrSize.height*0.7;
         this.standartCell = this.addSprite(battle_res.map_cell_0002, this.mapStartX, this.mapStartY, -12);
         this.cellSize = this.standartCell.getContentSize().width*0.83; //(width 77, height 91)
-        for (var i = 0; i < 7; i++) {
-            for (var j = 0; j < 7; j++) {
+        for (var i = 0; i < this.cellsInACol; i++) {
+            for (var j = 0; j < this.cellsInARow; j++) {
                 var x = this.mapStartX + this.cellSize*j;
                 var y = this.mapStartY - this.cellSize*i;
                 var cell = this.addSprite(battle_res.map_cell_0002, x, y);
@@ -101,6 +105,46 @@ var ScreenBattle = cc.Layer.extend({
         // house & monster_gate
         this.monsterGate = this.addSprite(battle_res.map_monster_gate_player, this.mapStartX*1.15, this.mapStartY*1.25, 0, this.SCALE_RATE*1.3);
         this.house = this.addSprite(battle_res.map_house, this.scrSize.width*0.8, this.mapStartY*0.25, 0, this.SCALE_RATE*1.5);
+    },
+    generateTopographic:function()
+    {
+        this.obstacleCount = randomInt(5,7);
+        this.obstaclePos = this.getObstaclePos(this.obstacleCount);
+        const cThis = this;
+        for (var i = 0; i < this.obstacleCount; i++) {
+            var obst;
+            var obstacleType = randomInt(2,3);
+            switch (obstacleType) {
+                case 2: 
+                    obst = new Tree(this.obstaclePos[i].x, this.obstaclePos[i].y, 1, cThis.SCALE_RATE);
+                    break;
+                case 3: 
+                    obst = new Rock(this.obstaclePos[i].x, this.obstaclePos[i].y, 1, cThis.SCALE_RATE);
+                    break;
+            }
+            cThis.addChild(obst._img);
+        }
+    },
+    getObstaclePos: function(obstacleCount) {
+        const cThis = this;
+        var posArray = [];
+        for (var i = 0; i < obstacleCount; i++) {
+            var cellIndex = randomInt(0, cThis.totalCells - 1);
+            // Todo: check valid index
+            posArray.push(cThis.convertCellIndexToCoord(cellIndex));
+        }
+        return posArray;
+
+    },
+    checkSideBySideCell: function(cellIndex1, cellIndex2) {
+        return (cellIndex2 === cellIndex1 + 1 || cellIndex2 === cellIndex1 - 1 || cellIndex2 === cellIndex1 + this.cellsInARow || cellIndex2 === cellIndex1 - this.cellsInARow);
+    },   
+    convertCellIndexToCoord: function(index) {
+        var xIndex = index%this.cellsInARow;
+        var yIndex = Math.floor(index/this.cellsInARow);
+        var xCoord = this.mapStartX + this.cellSize*xIndex;
+        var yCoord = this.mapStartY - this.cellSize*yIndex + this.scrSize.height*0.02;
+        return { x: xCoord, y: yCoord }
     },
     onStartGame:function()
     {

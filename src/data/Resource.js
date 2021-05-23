@@ -159,4 +159,10 @@ var battle_res = {
 	map_house : "assests/game/map/map_house.png",
 	map_monster_gate_player : "assests/game/map/map_monster_gate_player.png",
 	map_river_0000 : "assests/game/map/map_river_0000.png",
+
+    map_forest_obstacle_3: "assests/game/map/map_forest_obstacle_3.png",
+    map_forest_obstacle_2: "assests/game/map/map_forest_obstacle_2.png",
+    map_forest_obstacle_1: "assests/game/map/map_forest_obstacle_1.png",
+    
+    map_decoration_grass_0000: "assests/game/map/map_decoration_grass_0000.png",
 };
