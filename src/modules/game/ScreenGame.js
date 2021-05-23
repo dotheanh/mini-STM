@@ -78,7 +78,7 @@ function calcAngleDegrees(x1, y1, x2, y2)
     return atan % 360;
 }
 
-var ScreenGoldDigger = cc.Layer.extend({
+var ScreenGame = cc.Layer.extend({
     _itemMenu:null,
     _beginPos:0,
     isMouseDown:false,
@@ -210,7 +210,7 @@ var ScreenGoldDigger = cc.Layer.extend({
     },
     onSelectReset:function(sender)
     {
-        fr.view(ScreenGoldDigger);
+        fr.view(ScreenGame);
     },
     update: function (dt){
         // mỗi khi màn hình được vẽ lại thì hàm này được gọi => tính toán vị trí, tọa độ

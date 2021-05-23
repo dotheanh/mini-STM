@@ -79,7 +79,7 @@ var ScreenMenu = cc.Layer.extend({
     onStart:function(sender)
     {
         this.checkSystemAndPlaySound("button");
-        fr.view(ScreenGoldDigger);
+        fr.view(ScreenGame);
     },
     generateItem:function()
     {
