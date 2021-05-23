@@ -42,6 +42,7 @@
         "src/modules/game/ScreenGame.js",
         "src/modules/game/Topographic.js",
         "src/modules/game/ScreenBattle.js",
+        "src/modules/game/Utility.js",
         "src/modules/testnetwork/network/Network.js",
         "src/modules/testnetwork/network/Packet.js",
         "src/modules/testnetwork/ScreenNetwork.js",

@@ -83,6 +83,7 @@ var ScreenBattle = cc.Layer.extend({
                 this.cells.push(cell);
             }
         }
+        this._utility = new Utility(this.cellsInARow, this.cellsInACol, this.cellSize, this.scrSize, this.mapStartX, this.mapStartY);
         // draw decoration
         this.addSprite(battle_res.map_river_0000, this.scrSize.width/2, this.scrSize.height, 0, this.SCALE_RATE*1.65);
         this.addSprite(battle_res.map_decoration_0001, this.scrSize.width*0.03, this.mapStartY);
@@ -114,12 +115,14 @@ var ScreenBattle = cc.Layer.extend({
         for (var i = 0; i < this.obstacleCount; i++) {
             var obst;
             var obstacleType = randomInt(2,3);
+            var xPos = this._utility.convertCellIndexToCoord(this.obstaclePos[i]).x;
+            var yPos = this._utility.convertCellIndexToCoord(this.obstaclePos[i]).y;
             switch (obstacleType) {
                 case 2: 
-                    obst = new Tree(this.obstaclePos[i].x, this.obstaclePos[i].y, 1, cThis.SCALE_RATE);
+                    obst = new Tree(xPos, yPos, 1, cThis.SCALE_RATE);
                     break;
                 case 3: 
-                    obst = new Rock(this.obstaclePos[i].x, this.obstaclePos[i].y, 1, cThis.SCALE_RATE);
+                    obst = new Rock(xPos, yPos, 1, cThis.SCALE_RATE);
                     break;
             }
             cThis.addChild(obst._img);
@@ -127,18 +130,16 @@ var ScreenBattle = cc.Layer.extend({
     },
     getObstaclePos: function(obstacleCount) {
         const cThis = this;
-        var posArray = [];
         var indexArray = [];
         var c = obstacleCount;
         while (c != 0) {
             var cellIndex = randomInt(0, cThis.totalCells - 1);
             if (cThis.checkValidObstacleIndex(cellIndex, indexArray)) {
                 indexArray.push(cellIndex);
-                posArray.push(cThis.convertCellIndexToCoord(cellIndex));
                 c--;
             }
         }
-        return posArray;
+        return indexArray;
     },
     checkValidObstacleIndex: function(cellIndex, indexArray) {
         for (var i = 0; i < indexArray.length; i++) {
@@ -149,13 +150,6 @@ var ScreenBattle = cc.Layer.extend({
     },
     checkSideBySideCell: function(cellIndex1, cellIndex2) {
         return (cellIndex2 === cellIndex1 + 1 || cellIndex2 === cellIndex1 - 1 || cellIndex2 === cellIndex1 + this.cellsInARow || cellIndex2 === cellIndex1 - this.cellsInARow);
-    },   
-    convertCellIndexToCoord: function(index) {
-        var xIndex = index%this.cellsInARow;
-        var yIndex = Math.floor(index/this.cellsInARow);
-        var xCoord = this.mapStartX + this.cellSize*xIndex;
-        var yCoord = this.mapStartY - this.cellSize*yIndex + this.scrSize.height*0.02;
-        return { x: xCoord, y: yCoord }
     },
     onStartGame:function()
     {
