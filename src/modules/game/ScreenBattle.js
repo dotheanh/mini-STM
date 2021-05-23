@@ -128,13 +128,24 @@ var ScreenBattle = cc.Layer.extend({
     getObstaclePos: function(obstacleCount) {
         const cThis = this;
         var posArray = [];
-        for (var i = 0; i < obstacleCount; i++) {
+        var indexArray = [];
+        var c = obstacleCount;
+        while (c != 0) {
             var cellIndex = randomInt(0, cThis.totalCells - 1);
-            // Todo: check valid index
-            posArray.push(cThis.convertCellIndexToCoord(cellIndex));
+            if (cThis.checkValidObstacleIndex(cellIndex, indexArray)) {
+                indexArray.push(cellIndex);
+                posArray.push(cThis.convertCellIndexToCoord(cellIndex));
+                c--;
+            }
         }
         return posArray;
-
+    },
+    checkValidObstacleIndex: function(cellIndex, indexArray) {
+        for (var i = 0; i < indexArray.length; i++) {
+            if (indexArray[i] === cellIndex || this.checkSideBySideCell(cellIndex, indexArray[i]))
+                return false;
+        }
+        return true;
     },
     checkSideBySideCell: function(cellIndex1, cellIndex2) {
         return (cellIndex2 === cellIndex1 + 1 || cellIndex2 === cellIndex1 - 1 || cellIndex2 === cellIndex1 + this.cellsInARow || cellIndex2 === cellIndex1 - this.cellsInARow);
