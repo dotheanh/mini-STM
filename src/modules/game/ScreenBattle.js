@@ -48,6 +48,7 @@ var ScreenBattle = cc.Layer.extend({
         this.drawBackgroundMap();
         this.generateTopographic();
         this.generateMonsters();
+        this.onStartGame();
 
         cc.eventManager.removeAllListeners();
         // add click listener to start game
@@ -65,7 +66,7 @@ var ScreenBattle = cc.Layer.extend({
     },
     update: function (dt){
         // mỗi khi màn hình được vẽ lại thì hàm này được gọi => tính toán vị trí, tọa độ
-        // Todo: check collition
+        
 
     },
     drawBackgroundMap:function()
@@ -155,35 +156,65 @@ var ScreenBattle = cc.Layer.extend({
     generateMonsters:function()
     {
         const cThis = this;
+        cThis.monsters = [];
         var interval = setInterval(function () {
-            var monst;
-            var monsterPos = 0;
-            var monsterType = randomInt(1,4);
-            var xPos = cThis._utility.convertCellIndexToCoord(monsterPos).x;
-            var yPos = cThis._utility.convertCellIndexToCoord(monsterPos).y;
-            switch (monsterType) {
-                case 1: 
-                    monst = new Assassin(xPos, yPos, 1, cThis.SCALE_RATE);
-                    break;
-                case 2: 
-                    monst = new DarkGiant(xPos, yPos, 1, cThis.SCALE_RATE);
-                    break;
-                case 3: 
-                    monst = new Iceman(xPos, yPos, 1, cThis.SCALE_RATE);
-                    break;
-                case 4: 
-                    monst = new Bat(xPos, yPos, 1, cThis.SCALE_RATE);
-                    break;
+            cThis.addNewMonster();
+        }, 2000);
+    },
+    addNewMonster: function() {
+        var monst;
+        var monsterPos = 0;
+        var monsterType = randomInt(1,4);
+        var xPos = this._utility.convertCellIndexToCoord(monsterPos).x;
+        var yPos = this._utility.convertCellIndexToCoord(monsterPos).y;
+        switch (monsterType) {
+            case 1: 
+                monst = new Assassin(xPos, yPos, this.SCALE_RATE);
+                break;
+            case 2: 
+                monst = new DarkGiant(xPos, yPos, this.SCALE_RATE);
+                break;
+            case 3: 
+                monst = new Iceman(xPos, yPos, this.SCALE_RATE);
+                break;
+            case 4: 
+                monst = new Bat(xPos, yPos, this.SCALE_RATE);
+                break;
+        }
+        this.addChild(monst._img);
+        this.monsters.push(monst);
+    },
+    moveMonsters: function() {
+        const cThis = this;
+        for (var index = this.monsters.length - 1; index >= 0; index--) {
+            var monst = this.monsters[index];
+            if (monst._img.getPositionX() < cThis._utility._rightBorder) { // still inside board
+                // move                
+                if (!monst._flyable) {  // Todo: check collision
+                    if(monst._img.getPositionY() > cThis._utility._bottomBorder) {
+                        monst.moveDown(100);
+                    }
+                    else {
+                        monst.moveRight(100);
+                    }
+                }
+                else {
+                    monst.moveRight(100);
+                }
             }
-            cThis.addChild(monst._img);
-        }, 1000);
+            else {  // reach the house
+                cThis.monsters.splice(index, 1);
+                cThis.removeChild(monst._img, true);
+            }
+        }
     },
     onStartGame:function()
     {
-        // this.initTheClaw();
-        // this.generateItem();
-        // this.startCountDown();
-        this.gameState = 1;
+        //this.gameState = 1;
+        const cThis = this;
+        var interval = setInterval(function () {
+            cThis.moveMonsters();
+        }, 1000);
     },
     addClickListener:function() {
         // add event listener for layer
