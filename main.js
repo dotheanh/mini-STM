@@ -10,7 +10,7 @@ cc.game.onStart = function () {
     cc.view.enableRetina(true);
     // Adjust viewport meta
     cc.view.adjustViewPort(true);
-    cc.view.setFrameSize(1500,1000);
+    cc.view.setFrameSize(1078,770);
     jsb.fileUtils.addSearchPath(fr.NativeService.getFolderUpdateAssets(), true);
     jsb.fileUtils.addSearchPath(fr.NativeService.getFolderUpdateAssets() + "/res", true);
     cc.loader.resPath = "res";
@@ -34,7 +34,7 @@ cc.game.onStart = function () {
         //modules
         testnetwork.connector = new testnetwork.Connector(gv.gameClient);
 
-        fr.view(ScreenMenu);
+        fr.view(ScreenBattle);
     }, this);
 };
 cc.game.run();
