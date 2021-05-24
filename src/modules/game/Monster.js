@@ -9,7 +9,7 @@ var Monster = ccui.Widget.extend({
         this._img.setLocalZOrder(zOrder);
 
         this._flyable = null;
-        this._speed = 50;
+        this._speed = 30;
         this._move_right_animation = null;
         this._move_left_animation = null;
         this._move_up_animation = null;
@@ -137,7 +137,7 @@ var Bat = FlyingMonster.extend({
         this._png = monster_res.bat_png;
         this._anim_plist = monster_res.bat_anim_plist;
         this._super(xPos, yPos, zOrder, scaleRate);
-        this._speed = 2.5*this._speed;
+        this._speed = 2.2*this._speed;
     },
     getFileName: function() {
         return battle_res.monster_bat_run_0000;

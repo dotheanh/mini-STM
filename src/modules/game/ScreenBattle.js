@@ -203,14 +203,17 @@ var ScreenBattle = cc.Layer.extend({
             if (!cThis._utility.reachHousePoint(xPos, yPos)) { // quái chưa đến nhà chính
                 // move                
                 if (!monst._flyable) {  // Todo: check collision
-                    if(!cThis._utility.reachBottomBorder(xPos, yPos)) {
+                    if(!cThis.checkTouchObstacle(xPos, yPos-5)) {
                         monst.moveDown(100);
                     }
                     else {
                         monst.moveRight(100);
                     }
+                    // try to move down, if can't, try to move right
+                    //if ()
                 }
                 else {
+                    monst.moveDown(100);
                     monst.moveRight(100);
                 }
             }
@@ -224,6 +227,20 @@ var ScreenBattle = cc.Layer.extend({
                 }
             }
         }
+    },
+    checkTouchObstacle: function(xPos, yPos)   {
+        var isTouch = false;
+        if (this._utility.reachBottomBorder(xPos, yPos))
+            isTouch = true;
+        this.obstaclePos.forEach((obs, index) => {
+            centerX = this._utility.convertCellIndexToCoord(obs).x;
+            centerY = this._utility.convertCellIndexToCoord(obs).y;
+            if (centerX - this.cellSize <= xPos && xPos <= centerX + this.cellSize &&
+                centerY - this.cellSize <= yPos && yPos <= centerY + this.cellSize) {
+                isTouch = true;
+            }
+        })
+        return isTouch;
     },
     onStartGame:function()
     {
