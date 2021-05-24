@@ -31,7 +31,7 @@ var ScreenBattle = cc.Layer.extend({
         this.cellsInARow = 7;
         this.cellsInACol = 7;
         this.totalCells = this.cellsInARow*this.cellsInACol;
-        this.HP = 10;   // HP = 0 thì thua
+        this.houseHP = 10;   // HP = 0 thì thua
         this.score = 0; // diệt quái tăng điểm
         this.gameState = 0;
 
@@ -104,10 +104,10 @@ var ScreenBattle = cc.Layer.extend({
         this.monsterGate = this.addSprite(battle_res.map_monster_gate_player, this.mapStartX*1.15, this.mapStartY*1.25, 0, this.SCALE_RATE*1.3);
         this.house = this.addSprite(battle_res.map_house, this.scrSize.width*0.8, this.mapStartY*0.25, 0, this.SCALE_RATE*1.5);
         // display HP
-        this.HPBox = gv.commonText(this.HP, this.scrSize.width*0.8, this.mapStartY*0.4);
-        this.HPBox.setLocalZOrder(20);
-        this.HPBox.setFontSize(this.scrSize.width/30);
-        this.addChild(this.HPBox);
+        this.houseHPBox = gv.commonText(this.houseHP, this.scrSize.width*0.8, this.mapStartY*0.4);
+        this.houseHPBox.setLocalZOrder(20);
+        this.houseHPBox.setFontSize(this.scrSize.width/30);
+        this.addChild(this.houseHPBox);
         // display score
         this.addSprite(battle_res.common_icon_trophy, this.scrSize.width*0.05, this.scrSize.height*0.95, 1, this.SCALE_RATE*0.5);
         this.scoreBox = gv.commonText(this.score, this.scrSize.width*0.1, this.scrSize.height*0.95);
@@ -117,12 +117,13 @@ var ScreenBattle = cc.Layer.extend({
     },
     generateTopographic:function()
     {
-        this.obstacleCount = this._utility.randomInt(5,7);
+        this.obstacleCount = this._utility.randomInt(6,7);
         this.obstaclePos = this.getObstaclePos(this.obstacleCount);
+        this.obstacles = [];
         const cThis = this;
         for (var i = 0; i < this.obstacleCount; i++) {
             var obst;
-            var obstacleType = this._utility.randomInt(2,3);
+            var obstacleType = this._utility.randomInt(2,4);
             var xPos = this._utility.convertCellIndexToCoord(this.obstaclePos[i]).x;
             var yPos = this._utility.convertCellIndexToCoord(this.obstaclePos[i]).y;
             switch (obstacleType) {
@@ -132,7 +133,11 @@ var ScreenBattle = cc.Layer.extend({
                 case 3: 
                     obst = new Rock(xPos, yPos, 1, cThis.SCALE_RATE);
                     break;
+                case 4: 
+                    obst = new Tower(xPos, yPos, 1, cThis.SCALE_RATE);
+                    break;
             }
+            cThis.obstacles.push(obst);
             cThis.addChild(obst._img);
         }
     },
@@ -221,11 +226,11 @@ var ScreenBattle = cc.Layer.extend({
             }
             else {  // reach the house
                 if (this.gameState === 1) {
-                    cThis.HP--;
-                    this.HPBox.setString(cThis.HP);
+                    cThis.houseHP--;
+                    this.houseHPBox.setString(cThis.houseHP);
                     cThis.monsters.splice(index, 1);
                     cThis.removeChild(monst._img, true);
-                    if (cThis.HP <= 0) cThis.onGameOver();
+                    if (cThis.houseHP <= 0) cThis.onGameOver();
                 }
             }
         }
@@ -244,13 +249,39 @@ var ScreenBattle = cc.Layer.extend({
         })
         return isTouch;
     },
+    fireTower: function() {
+        const cThis = this;
+        for (var index = cThis.obstacles.length - 1; index >= 0; index--) {
+            if (cThis.obstacles[index]._isActacker) {
+                var tower = cThis.obstacles[index];
+                var xPos = tower._img.getPositionX();
+                var yPos = tower._img.getPositionY();
+                // destroy các quái trong bán kính nổ
+                cThis.monsters.forEach((monst, index) => {
+                    let distance = cThis._utility.calDistance(xPos, yPos, monst._img.getPositionX(), monst._img.getPositionY());
+                    if ( distance < 150) {
+                        monst.getHit();
+                        if (monst._HP <= 0) {   // monster was killed
+                            cThis.score += monst._maxHP;
+                            cThis.scoreBox.setString(cThis.score);
+                            cThis.removeChild(monst._img,true);
+                            cThis.monsters.splice(index, 1);
+                        }
+                    }
+                })
+            }
+        }
+    },
     onStartGame:function()
     {
         this.gameState = 1;
         const cThis = this;
-        var interval = setInterval(function () {
+        var intervalMove = setInterval(function () {
             cThis.moveMonsters();
         }, 1000);
+        var intervalFire = setInterval(function () {
+            cThis.fireTower();
+        }, 1200);
     },
     onGameOver: function() {
         this.gameState = 2;

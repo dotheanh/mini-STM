@@ -174,6 +174,8 @@ var battle_res = {
     monster_bat_run_0000: "assests/game/monster/frame/bat/monster_bat_run_0000.png",
 
     textgameover_sheet0: "assests/game/golddigger/images/textgameover-sheet0.png",
+
+    tower_ice_gun_idle_0_0023: "assests/game/tower/frame/ice_gun_1_2/tower_ice_gun_idle_0_0023.png",
 };
 
 

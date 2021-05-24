@@ -14,6 +14,7 @@ var Monster = ccui.Widget.extend({
         this._move_left_animation = null;
         this._move_up_animation = null;
         this._move_down_animation = null;
+        this._HP = this._maxHP;
     },
 
     getFileName: function() {
@@ -26,6 +27,11 @@ var Monster = ccui.Widget.extend({
 
     moveRight: function() {
         this._img.runAction(cc.moveBy(1, this._speed*1, 0));
+    },
+
+    getHit: function() {
+        this._HP--;
+        this._img.runAction(cc.sequence(cc.scaleBy(0.1, 0.9), cc.fadeOut(0.2), cc.fadeIn(0.2),cc.scaleBy(0.1, 1.1)));
     }
 });
 
@@ -67,6 +73,7 @@ var Assassin = WalkingMonster.extend({
         this._png = monster_res.assassin_png;
         this._anim_plist = monster_res.assassin_anim_plist;
         zOrder = zOrder || 20;
+        this._maxHP = 2;
         this._super(xPos, yPos, scaleRate, zOrder);
         this._speed = 2*this._speed;
     },
@@ -79,6 +86,7 @@ var DarkGiant = WalkingMonster.extend({
         this._plist = monster_res.dark_giant_plist;
         this._png = monster_res.dark_giant_png;
         this._anim_plist = monster_res.dark_giant_anim_plist;
+        this._maxHP = 10;
         this._super(xPos, yPos, scaleRate, zOrder);
         this._speed = 1*this._speed;
     },
@@ -91,6 +99,7 @@ var Iceman = WalkingMonster.extend({
         this._plist = monster_res.iceman_plist;
         this._png = monster_res.iceman_png;
         this._anim_plist = monster_res.iceman_anim_plist;
+        this._maxHP = 5;
         this._super(xPos, yPos, scaleRate, zOrder);
         this._speed = 1.4*this._speed;
     },
@@ -138,6 +147,7 @@ var Bat = FlyingMonster.extend({
         this._png = monster_res.bat_png;
         this._anim_plist = monster_res.bat_anim_plist;
         zOrder = zOrder || 25;
+        this._maxHP = 1;
         this._super(xPos, yPos, scaleRate, zOrder);
         this._speed = 2.2*this._speed;
     },
