@@ -200,4 +200,10 @@ var monster_res = {
 var tower_res = {
 	tower_ice_fx_json : "assests/game/tower/fx/tower_ice_fx.json",
 	tower_ice_fx_atlas : "assests/game/tower/fx/tower_ice_fx.atlas",
+    
+	tower_ice_gun_bullet_0000 : "assests/game/tower/frame/ice_gun_1_2/tower_ice_gun_bullet_0000.png",
+
+	tower_ice_gun_attack_0_plist : "assests/animation/tower_ice/tower_ice_gun_attack_0.plist",
+	tower_ice_gun_attack_0_png : "assests/animation/tower_ice/tower_ice_gun_attack_0.png",
+	tower_ice_gun_attack_0_anim_plist : "assests/animation/tower_ice/tower_ice_gun_attack_0_anim.plist",
 };

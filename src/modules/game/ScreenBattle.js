@@ -134,7 +134,7 @@ var ScreenBattle = cc.Layer.extend({
                     obst = new Rock(xPos, yPos, 1, cThis.SCALE_RATE);
                     break;
                 case 4: 
-                    obst = new Tower(xPos, yPos, 1, cThis.SCALE_RATE);
+                    obst = new Tower(xPos, yPos, 15, cThis.SCALE_RATE);
                     break;
             }
             cThis.obstacles.push(obst);
@@ -263,7 +263,7 @@ var ScreenBattle = cc.Layer.extend({
                     let distance = cThis._utility.calDistance(xPos, yPos, xMons, yMons);
                     if ( distance < 150) {
                         monst.getHit();
-                        cThis.addChild(tower.fire(xMons, yMons));
+                        tower.fire(xMons, yMons, cThis);
                         if (monst._HP <= 0) {   // monster was killed
                             cThis.score += monst._maxHP;
                             cThis.scoreBox.setString(cThis.score);
