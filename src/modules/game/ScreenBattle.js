@@ -154,7 +154,9 @@ var ScreenBattle = cc.Layer.extend({
         for (var i = 0; i < indexArray.length; i++) {
             if (indexArray[i] === cellIndex || this.checkSideBySideCell(cellIndex, indexArray[i]))
                 return false;
-            if (indexArray[i] === cellIndex - 6 || indexArray[i] === cellIndex + 6) // vị trí này sẽ chặn đường quái
+            if (indexArray[i] === cellIndex - (this.cellsInARow-1) || indexArray[i] === cellIndex + (this.cellsInARow-1)) // vị trí này sẽ chặn đường quái
+                return false;
+            if (indexArray[i] === cellIndex - (this.cellsInARow+1) || indexArray[i] === cellIndex + (this.cellsInARow+1)) // vị trí này sẽ chặn đường quái
                 return false;
         }
         return true;

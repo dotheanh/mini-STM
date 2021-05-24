@@ -2,7 +2,7 @@
 var Topographic = ccui.Widget.extend({
     ctor: function(xPos, yPos, zOrder, scaleRate) {
         //this._super();
-        zOrder = zOrder || 0;
+        zOrder = zOrder || 15;
         scaleRate = scaleRate || 0.831;
         this._img = new cc.Sprite(this.getFileName());
         this._img.setScale(scaleRate);

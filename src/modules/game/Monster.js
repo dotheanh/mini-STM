@@ -30,8 +30,8 @@ var Monster = ccui.Widget.extend({
 });
 
 var WalkingMonster = Monster.extend({
-    ctor: function(xPos, yPos, zOrder, scaleRate) {
-        this._super(xPos, yPos, zOrder, scaleRate);
+    ctor: function(xPos, yPos, scaleRate, zOrder) {
+        this._super(xPos, yPos, scaleRate, zOrder);
         this._flyable = false;
 
         cc.spriteFrameCache.addSpriteFrames(this._plist, this._png);
@@ -62,11 +62,12 @@ var WalkingMonster = Monster.extend({
 });
 
 var Assassin = WalkingMonster.extend({
-    ctor: function(xPos, yPos, zOrder, scaleRate) {
+    ctor: function(xPos, yPos, scaleRate, zOrder) {
         this._plist = monster_res.assassin_plist;
         this._png = monster_res.assassin_png;
         this._anim_plist = monster_res.assassin_anim_plist;
-        this._super(xPos, yPos, zOrder, scaleRate);
+        zOrder = zOrder || 20;
+        this._super(xPos, yPos, scaleRate, zOrder);
         this._speed = 2*this._speed;
     },
     getFileName: function() {
@@ -74,11 +75,11 @@ var Assassin = WalkingMonster.extend({
     }
 });
 var DarkGiant = WalkingMonster.extend({
-    ctor: function(xPos, yPos, zOrder, scaleRate) {
+    ctor: function(xPos, yPos, scaleRate, zOrder) {
         this._plist = monster_res.dark_giant_plist;
         this._png = monster_res.dark_giant_png;
         this._anim_plist = monster_res.dark_giant_anim_plist;
-        this._super(xPos, yPos, zOrder, scaleRate);
+        this._super(xPos, yPos, scaleRate, zOrder);
         this._speed = 1*this._speed;
     },
     getFileName: function() {
@@ -86,11 +87,11 @@ var DarkGiant = WalkingMonster.extend({
     }
 });
 var Iceman = WalkingMonster.extend({
-    ctor: function(xPos, yPos, zOrder, scaleRate) {
+    ctor: function(xPos, yPos, scaleRate, zOrder) {
         this._plist = monster_res.iceman_plist;
         this._png = monster_res.iceman_png;
         this._anim_plist = monster_res.iceman_anim_plist;
-        this._super(xPos, yPos, zOrder, scaleRate);
+        this._super(xPos, yPos, scaleRate, zOrder);
         this._speed = 1.4*this._speed;
     },
     getFileName: function() {
@@ -100,8 +101,8 @@ var Iceman = WalkingMonster.extend({
 
 
 var FlyingMonster = Monster.extend({
-    ctor: function(xPos, yPos, zOrder, scaleRate) {
-        this._super(xPos, yPos, zOrder, scaleRate);
+    ctor: function(xPos, yPos, scaleRate, zOrder) {
+        this._super(xPos, yPos, scaleRate, zOrder);
         this._flyable = true;
 
         cc.spriteFrameCache.addSpriteFrames(this._plist, this._png);
@@ -132,11 +133,12 @@ var FlyingMonster = Monster.extend({
 });
 
 var Bat = FlyingMonster.extend({
-    ctor: function(xPos, yPos, zOrder, scaleRate) {
+    ctor: function(xPos, yPos, scaleRate, zOrder) {
         this._plist = monster_res.bat_plist;
         this._png = monster_res.bat_png;
         this._anim_plist = monster_res.bat_anim_plist;
-        this._super(xPos, yPos, zOrder, scaleRate);
+        zOrder = zOrder || 25;
+        this._super(xPos, yPos, scaleRate, zOrder);
         this._speed = 2.2*this._speed;
     },
     getFileName: function() {
