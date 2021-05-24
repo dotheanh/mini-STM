@@ -1,12 +1,4 @@
-// generate random
-function randomInt(min, max) { // min and max included 
-    return Math.floor(Math.random() * (max - min + 1) + min);
-}
-function calDistance(x1, y1, x2, y2) {
-    var deltaX = x1 - x2;
-    var deltaY = y1 - y2;
-    return Math.sqrt(deltaX*deltaX + deltaY*deltaY);
-}
+
 function checkClickButton(touch, button) {
     // button area
     var x1 = button.getPositionX() - button.getBoundingBox().width/2;
@@ -39,18 +31,21 @@ var ScreenBattle = cc.Layer.extend({
         this.cellsInARow = 7;
         this.cellsInACol = 7;
         this.totalCells = this.cellsInARow*this.cellsInACol;
+        this.HP = 10;   // HP = 0 thì thua
+        this.score = 0; // diệt quái tăng điểm
+        this.gameState = 0;
 
         this.initTheGame();
 
         this.schedule(this.update);
     },
     initTheGame: function() {   // init các giá trị, hiển thị hình ảnh trước khi vào game
+        cc.eventManager.removeAllListeners();
         this.drawBackgroundMap();
         this.generateTopographic();
         this.generateMonsters();
         this.onStartGame();
 
-        cc.eventManager.removeAllListeners();
         // add click listener to start game
         this.addClickListener();
         // init values for level
@@ -108,15 +103,26 @@ var ScreenBattle = cc.Layer.extend({
         // house & monster_gate
         this.monsterGate = this.addSprite(battle_res.map_monster_gate_player, this.mapStartX*1.15, this.mapStartY*1.25, 0, this.SCALE_RATE*1.3);
         this.house = this.addSprite(battle_res.map_house, this.scrSize.width*0.8, this.mapStartY*0.25, 0, this.SCALE_RATE*1.5);
+        // display HP
+        this.HPBox = gv.commonText(this.HP, this.scrSize.width*0.8, this.mapStartY*0.4);
+        this.HPBox.setLocalZOrder(20);
+        this.HPBox.setFontSize(this.scrSize.width/30);
+        this.addChild(this.HPBox);
+        // display score
+        this.addSprite(battle_res.common_icon_trophy, this.scrSize.width*0.05, this.scrSize.height*0.95, 1, this.SCALE_RATE*0.5);
+        this.scoreBox = gv.commonText(this.score, this.scrSize.width*0.1, this.scrSize.height*0.95);
+        this.scoreBox.setLocalZOrder(20);
+        this.scoreBox.setFontSize(this.scrSize.width/30);
+        this.addChild(this.scoreBox);
     },
     generateTopographic:function()
     {
-        this.obstacleCount = randomInt(5,7);
+        this.obstacleCount = this._utility.randomInt(5,7);
         this.obstaclePos = this.getObstaclePos(this.obstacleCount);
         const cThis = this;
         for (var i = 0; i < this.obstacleCount; i++) {
             var obst;
-            var obstacleType = randomInt(2,3);
+            var obstacleType = this._utility.randomInt(2,3);
             var xPos = this._utility.convertCellIndexToCoord(this.obstaclePos[i]).x;
             var yPos = this._utility.convertCellIndexToCoord(this.obstaclePos[i]).y;
             switch (obstacleType) {
@@ -135,7 +141,7 @@ var ScreenBattle = cc.Layer.extend({
         var indexArray = [];
         var c = obstacleCount;
         while (c != 0) {
-            var cellIndex = randomInt(0, cThis.totalCells - 1);
+            var cellIndex = this._utility.randomInt(0, cThis.totalCells - 1);
             if (cThis.checkValidObstacleIndex(cellIndex, indexArray)) {
                 indexArray.push(cellIndex);
                 c--;
@@ -144,8 +150,11 @@ var ScreenBattle = cc.Layer.extend({
         return indexArray;
     },
     checkValidObstacleIndex: function(cellIndex, indexArray) {
+        if (cellIndex === 0 || cellIndex === this.totalCells - 1) return false; // vị trí này sẽ chặn đường quái
         for (var i = 0; i < indexArray.length; i++) {
             if (indexArray[i] === cellIndex || this.checkSideBySideCell(cellIndex, indexArray[i]))
+                return false;
+            if (indexArray[i] === cellIndex - 6 || indexArray[i] === cellIndex + 6) // vị trí này sẽ chặn đường quái
                 return false;
         }
         return true;
@@ -158,13 +167,14 @@ var ScreenBattle = cc.Layer.extend({
         const cThis = this;
         cThis.monsters = [];
         var interval = setInterval(function () {
-            cThis.addNewMonster();
+            if (cThis.gameState != 2)
+                cThis.addNewMonster();
         }, 2000);
     },
     addNewMonster: function() {
         var monst;
         var monsterPos = 0;
-        var monsterType = randomInt(1,4);//(1,4)
+        var monsterType = this._utility.randomInt(1,4);//(1,4)
         var xPos = this._utility.convertCellIndexToCoord(monsterPos).x;
         var yPos = this._utility.convertCellIndexToCoord(monsterPos).y;
         switch (monsterType) {
@@ -188,10 +198,12 @@ var ScreenBattle = cc.Layer.extend({
         const cThis = this;
         for (var index = this.monsters.length - 1; index >= 0; index--) {
             var monst = this.monsters[index];
-            if (monst._img.getPositionX() < cThis._utility._rightBorder) { // still inside board
+            var xPos = monst._img.getPositionX();
+            var yPos = monst._img.getPositionY();
+            if (!cThis._utility.reachHousePoint(xPos, yPos)) { // quái chưa đến nhà chính
                 // move                
                 if (!monst._flyable) {  // Todo: check collision
-                    if(monst._img.getPositionY() > cThis._utility._bottomBorder) {
+                    if(!cThis._utility.reachBottomBorder(xPos, yPos)) {
                         monst.moveDown(100);
                     }
                     else {
@@ -203,18 +215,30 @@ var ScreenBattle = cc.Layer.extend({
                 }
             }
             else {  // reach the house
-                cThis.monsters.splice(index, 1);
-                cThis.removeChild(monst._img, true);
+                if (this.gameState === 1) {
+                    cThis.HP--;
+                    this.HPBox.setString(cThis.HP);
+                    cThis.monsters.splice(index, 1);
+                    cThis.removeChild(monst._img, true);
+                    if (cThis.HP <= 0) cThis.onGameOver();
+                }
             }
         }
     },
     onStartGame:function()
     {
-        //this.gameState = 1;
+        this.gameState = 1;
         const cThis = this;
         var interval = setInterval(function () {
             cThis.moveMonsters();
         }, 1000);
+    },
+    onGameOver: function() {
+        this.gameState = 2;
+        this.checkSystemAndPlaySound("gameover");
+        // text Game over
+        this.txtGameOver = this.addSprite(battle_res.textgameover_sheet0, this.scrSize.width/2, this.scrSize.height/2, 15);
+        this.txtGameOver.runAction(cc.repeat(cc.sequence(cc.scaleBy(1.5, 1.1),cc.scaleBy(1.5, 0.9)),3));
     },
     addClickListener:function() {
         // add event listener for layer
@@ -222,18 +246,21 @@ var ScreenBattle = cc.Layer.extend({
         cc.eventManager.addListener({
             event: cc.EventListener.TOUCH_ONE_BY_ONE,
             onTouchBegan: function(touch, event){
-                
+                if (cThis.gameState === 2) {
+                    // restart game
+                    fr.view(ScreenBattle);
+                }
                 return true;
             },
         }, this);
         
     },
-    // checkSystemAndPlaySound: function(soundName, isLoop = false) {
-    //     var soundFile_ogg = "assests/game/golddigger/media/" + soundName + ".ogg";
-    //     var soundFile_mp3 = "assests/game/golddigger/media/" + soundName + ".mp3";
-    //     if (this.sound)
-    //         cc.audioEngine.playMusic(cc.sys.os == cc.sys.OS_WP8 || cc.sys.os == cc.sys.OS_WINRT ? soundFile_ogg : soundFile_mp3, isLoop);
-    // },
+    checkSystemAndPlaySound: function(soundName, isLoop = false) {
+        var soundFile_ogg = "assests/game/golddigger/media/" + soundName + ".ogg";
+        var soundFile_mp3 = "assests/game/golddigger/media/" + soundName + ".mp3";
+        if (this.sound)
+            cc.audioEngine.playMusic(cc.sys.os == cc.sys.OS_WP8 || cc.sys.os == cc.sys.OS_WINRT ? soundFile_ogg : soundFile_mp3, isLoop);
+    },
     addSprite: function(resource, xPos, yPos, zOrder, scaleRate) {
         zOrder = zOrder || 0;
         scaleRate = scaleRate || this.SCALE_RATE;

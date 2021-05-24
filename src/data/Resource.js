@@ -145,6 +145,8 @@ var sound_res = {   // not use
 
 
 var battle_res = {
+    common_icon_trophy: "assests/game/common/common_icon_trophy.png",
+
 	map_background_0000 : "assests/game/map/map_background_0000.png",
 	map_background_0003 : "assests/game/map/map_background_0003.png",
 	map_cell_0002 : "assests/game/map/map_cell_0002.png",
@@ -170,6 +172,8 @@ var battle_res = {
     monster_dark_giant_run_0000: "assests/game/monster/frame/dark_giant/monster_dark_giant_run_0000.png",
     monster_iceman_run_0000: "assests/game/monster/frame/iceman/monster_iceman_run_0000.png",
     monster_bat_run_0000: "assests/game/monster/frame/bat/monster_bat_run_0000.png",
+
+    textgameover_sheet0: "assests/game/golddigger/images/textgameover-sheet0.png",
 };
 
 
