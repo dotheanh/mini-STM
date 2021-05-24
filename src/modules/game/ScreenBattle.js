@@ -258,9 +258,12 @@ var ScreenBattle = cc.Layer.extend({
                 var yPos = tower._img.getPositionY();
                 // destroy các quái trong bán kính nổ
                 cThis.monsters.forEach((monst, index) => {
-                    let distance = cThis._utility.calDistance(xPos, yPos, monst._img.getPositionX(), monst._img.getPositionY());
+                    xMons = monst._img.getPositionX();
+                    yMons = monst._img.getPositionY();
+                    let distance = cThis._utility.calDistance(xPos, yPos, xMons, yMons);
                     if ( distance < 150) {
                         monst.getHit();
+                        cThis.addChild(tower.fire(xMons, yMons));
                         if (monst._HP <= 0) {   // monster was killed
                             cThis.score += monst._maxHP;
                             cThis.scoreBox.setString(cThis.score);

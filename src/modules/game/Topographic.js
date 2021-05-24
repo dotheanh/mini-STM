@@ -55,9 +55,13 @@ var Tower = Obstacle.extend({
     getFileName: function() {
         return battle_res.tower_ice_gun_idle_0_0023;
     },
-    fire: function(monster) {
+    fire: function(x, y) {
         // do animation
-        
+        var spine_tower_ice = new sp.SkeletonAnimation(tower_res.tower_ice_fx_json, tower_res.tower_ice_fx_atlas);
+        spine_tower_ice.setAnimation(0, 'attack_5', false);
+        spine_tower_ice.setScale(0.5);
+		spine_tower_ice.setPosition(cc.p(x, y));
+        return spine_tower_ice;
     }
 });
 

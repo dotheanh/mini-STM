@@ -196,3 +196,8 @@ var monster_res = {
 	iceman_png : "assests/animation/iceman/iceman.png",
 	iceman_anim_plist : "assests/animation/iceman/iceman_anim.plist",
 };
+
+var tower_res = {
+	tower_ice_fx_json : "assests/game/tower/fx/tower_ice_fx.json",
+	tower_ice_fx_atlas : "assests/game/tower/fx/tower_ice_fx.atlas",
+};
