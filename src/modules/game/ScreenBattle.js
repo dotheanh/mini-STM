@@ -164,7 +164,7 @@ var ScreenBattle = cc.Layer.extend({
     addNewMonster: function() {
         var monst;
         var monsterPos = 0;
-        var monsterType = randomInt(1,1);//(1,4)
+        var monsterType = randomInt(1,4);//(1,4)
         var xPos = this._utility.convertCellIndexToCoord(monsterPos).x;
         var yPos = this._utility.convertCellIndexToCoord(monsterPos).y;
         switch (monsterType) {

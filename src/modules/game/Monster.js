@@ -41,8 +41,8 @@ var Assassin = WalkingMonster.extend({
         this._super(xPos, yPos, zOrder, scaleRate);
         this._speed = 20;
 
-        cc.spriteFrameCache.addSpriteFrames(monster_assassin_res.assassin_plist, monster_assassin_res.assassin_png);
-        cc.animationCache.addAnimations(monster_assassin_res.assassin_anim_plist);
+        cc.spriteFrameCache.addSpriteFrames(monster_res.assassin_plist, monster_res.assassin_png);
+        cc.animationCache.addAnimations(monster_res.assassin_anim_plist);
 
 		this._move_down_animation = cc.animationCache.getAnimation("move_down");
         this._move_down_animation.setLoops(-1);

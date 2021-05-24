@@ -173,8 +173,20 @@ var battle_res = {
 };
 
 
-var monster_assassin_res = {
+var monster_res = {
 	assassin_plist : "assests/animation/assassin/assassin.plist",
 	assassin_png : "assests/animation/assassin/assassin.png",
 	assassin_anim_plist : "assests/animation/assassin/assassin_anim.plist",
+    
+	bat_plist : "assests/animation/bat/bat.plist",
+	bat_png : "assests/animation/bat/bat.png",
+	bat_anim_plist : "assests/animation/bat/bat_anim.plist",
+    
+	dark_giant_plist : "assests/animation/dark_giant/dark_giant.plist",
+	dark_giant_png : "assests/animation/dark_giant/dark_giant.png",
+	dark_giant_anim_plist : "assests/animation/dark_giant/dark_giant_anim.plist",
+    
+	iceman_plist : "assests/animation/iceman/iceman.plist",
+	iceman_png : "assests/animation/iceman/iceman.png",
+	iceman_anim_plist : "assests/animation/iceman/iceman_anim.plist",
 };

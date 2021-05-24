@@ -7,7 +7,7 @@
 		<key>move_down</key>
 		<dict>
 			<key>delayPerUnit</key>
-			<real>0.1</real>
+			<real>0.07143</real>
 			<key>restoreOriginalFrame</key>
 			<true/>
 			<key>loops</key>
@@ -16,7 +16,7 @@
 			<array>
 				<dict>
 					<key>spriteframe</key>
-					<string>monster_assassin_run_0000.png</string>
+					<string>monster_dark_giant_run_0000.png</string>
 					<key>delayUnits</key>
 					<integer>1</integer>
 					<key>notification</key>
@@ -27,55 +27,79 @@
 				</dict>
 				<dict>
 					<key>spriteframe</key>
-					<string>monster_assassin_run_0001.png</string>
+					<string>monster_dark_giant_run_0001.png</string>
 					<key>delayUnits</key>
 					<integer>1</integer>
 				</dict>
 				<dict>
 					<key>spriteframe</key>
-					<string>monster_assassin_run_0002.png</string>
+					<string>monster_dark_giant_run_0002.png</string>
 					<key>delayUnits</key>
 					<integer>1</integer>
 				</dict>
 				<dict>
 					<key>spriteframe</key>
-					<string>monster_assassin_run_0003.png</string>
+					<string>monster_dark_giant_run_0003.png</string>
 					<key>delayUnits</key>
 					<integer>1</integer>
 				</dict>
 				<dict>
 					<key>spriteframe</key>
-					<string>monster_assassin_run_0004.png</string>
+					<string>monster_dark_giant_run_0004.png</string>
 					<key>delayUnits</key>
 					<integer>1</integer>
 				</dict>
 				<dict>
 					<key>spriteframe</key>
-					<string>monster_assassin_run_0005.png</string>
+					<string>monster_dark_giant_run_0005.png</string>
 					<key>delayUnits</key>
 					<integer>1</integer>
 				</dict>
 				<dict>
 					<key>spriteframe</key>
-					<string>monster_assassin_run_0006.png</string>
+					<string>monster_dark_giant_run_0006.png</string>
 					<key>delayUnits</key>
 					<integer>1</integer>
 				</dict>
 				<dict>
 					<key>spriteframe</key>
-					<string>monster_assassin_run_0007.png</string>
+					<string>monster_dark_giant_run_0007.png</string>
 					<key>delayUnits</key>
 					<integer>1</integer>
 				</dict>
 				<dict>
 					<key>spriteframe</key>
-					<string>monster_assassin_run_0008.png</string>
+					<string>monster_dark_giant_run_0008.png</string>
 					<key>delayUnits</key>
 					<integer>1</integer>
 				</dict>
 				<dict>
 					<key>spriteframe</key>
-					<string>monster_assassin_run_0009.png</string>
+					<string>monster_dark_giant_run_0009.png</string>
+					<key>delayUnits</key>
+					<integer>1</integer>
+				</dict>
+				<dict>
+					<key>spriteframe</key>
+					<string>monster_dark_giant_run_0010.png</string>
+					<key>delayUnits</key>
+					<integer>1</integer>
+				</dict>
+				<dict>
+					<key>spriteframe</key>
+					<string>monster_dark_giant_run_0011.png</string>
+					<key>delayUnits</key>
+					<integer>1</integer>
+				</dict>
+				<dict>
+					<key>spriteframe</key>
+					<string>monster_dark_giant_run_0012.png</string>
+					<key>delayUnits</key>
+					<integer>1</integer>
+				</dict>
+				<dict>
+					<key>spriteframe</key>
+					<string>monster_dark_giant_run_0013.png</string>
 					<key>delayUnits</key>
 					<integer>1</integer>
 				</dict>
@@ -84,7 +108,7 @@
 		<key>move_right</key>
 		<dict>
 			<key>delayPerUnit</key>
-			<real>0.1</real>
+			<real>0.07143</real>
 			<key>restoreOriginalFrame</key>
 			<true/>
 			<key>loops</key>
@@ -93,7 +117,7 @@
 			<array>
 				<dict>
 					<key>spriteframe</key>
-					<string>monster_assassin_run_0020.png</string>
+					<string>monster_dark_giant_run_0028.png</string>
 					<key>delayUnits</key>
 					<integer>1</integer>
 					<key>notification</key>
@@ -104,55 +128,79 @@
 				</dict>
 				<dict>
 					<key>spriteframe</key>
-					<string>monster_assassin_run_0021.png</string>
+					<string>monster_dark_giant_run_0029.png</string>
 					<key>delayUnits</key>
 					<integer>1</integer>
 				</dict>
 				<dict>
 					<key>spriteframe</key>
-					<string>monster_assassin_run_0022.png</string>
+					<string>monster_dark_giant_run_0030.png</string>
 					<key>delayUnits</key>
 					<integer>1</integer>
 				</dict>
 				<dict>
 					<key>spriteframe</key>
-					<string>monster_assassin_run_0023.png</string>
+					<string>monster_dark_giant_run_0031.png</string>
 					<key>delayUnits</key>
 					<integer>1</integer>
 				</dict>
 				<dict>
 					<key>spriteframe</key>
-					<string>monster_assassin_run_0024.png</string>
+					<string>monster_dark_giant_run_0032.png</string>
 					<key>delayUnits</key>
 					<integer>1</integer>
 				</dict>
 				<dict>
 					<key>spriteframe</key>
-					<string>monster_assassin_run_0025.png</string>
+					<string>monster_dark_giant_run_0033.png</string>
 					<key>delayUnits</key>
 					<integer>1</integer>
 				</dict>
 				<dict>
 					<key>spriteframe</key>
-					<string>monster_assassin_run_0026.png</string>
+					<string>monster_dark_giant_run_0034.png</string>
 					<key>delayUnits</key>
 					<integer>1</integer>
 				</dict>
 				<dict>
 					<key>spriteframe</key>
-					<string>monster_assassin_run_0027.png</string>
+					<string>monster_dark_giant_run_0035.png</string>
 					<key>delayUnits</key>
 					<integer>1</integer>
 				</dict>
 				<dict>
 					<key>spriteframe</key>
-					<string>monster_assassin_run_0028.png</string>
+					<string>monster_dark_giant_run_0036.png</string>
 					<key>delayUnits</key>
 					<integer>1</integer>
 				</dict>
 				<dict>
 					<key>spriteframe</key>
-					<string>monster_assassin_run_0029.png</string>
+					<string>monster_dark_giant_run_0037.png</string>
+					<key>delayUnits</key>
+					<integer>1</integer>
+				</dict>
+				<dict>
+					<key>spriteframe</key>
+					<string>monster_dark_giant_run_0038.png</string>
+					<key>delayUnits</key>
+					<integer>1</integer>
+				</dict>
+				<dict>
+					<key>spriteframe</key>
+					<string>monster_dark_giant_run_0039.png</string>
+					<key>delayUnits</key>
+					<integer>1</integer>
+				</dict>
+				<dict>
+					<key>spriteframe</key>
+					<string>monster_dark_giant_run_0040.png</string>
+					<key>delayUnits</key>
+					<integer>1</integer>
+				</dict>
+				<dict>
+					<key>spriteframe</key>
+					<string>monster_dark_giant_run_0041.png</string>
 					<key>delayUnits</key>
 					<integer>1</integer>
 				</dict>
@@ -163,7 +211,7 @@
 	<dict>
 		<key>spritesheets</key>
 		<array>
-			<string>assassin.plist</string>
+			<string>dark_giant.plist</string>
 		</array>
 		<key>format</key>
 		<integer>2</integer>
