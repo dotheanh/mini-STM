@@ -1,12 +1,6 @@
 
 var Monster = ccui.Widget.extend({
-    ctor: function(xPos, yPos, scaleRate, zOrder) {
-        zOrder = zOrder || 2;
-        scaleRate = scaleRate || 0.831;
-        this._img = new cc.Sprite(this.getFileName());
-        this._img.setScale(scaleRate);
-        this._img.attr({ x: xPos, y: yPos });
-        this._img.setLocalZOrder(zOrder);
+    ctor: function(level, xPos, yPos, scaleRate, zOrder) {
 
         this._flyable = null;
         this._speed = 30;
@@ -14,7 +8,16 @@ var Monster = ccui.Widget.extend({
         this._move_left_animation = null;
         this._move_up_animation = null;
         this._move_down_animation = null;
-        this._HP = this._maxHP;
+        this._level = level;
+        //this._maxHP = 1*this._level;
+        //this._HP = this._maxHP;
+
+        zOrder = zOrder || 2;
+        scaleRate = scaleRate || 0.831;
+        this._img = new cc.Sprite(this.getFileName());
+        this._img.setScale(scaleRate*Math.pow(1.1,this._level));
+        this._img.attr({ x: xPos, y: yPos });
+        this._img.setLocalZOrder(zOrder);
     },
 
     getFileName: function() {
@@ -36,8 +39,8 @@ var Monster = ccui.Widget.extend({
 });
 
 var WalkingMonster = Monster.extend({
-    ctor: function(xPos, yPos, scaleRate, zOrder) {
-        this._super(xPos, yPos, scaleRate, zOrder);
+    ctor: function(level, xPos, yPos, scaleRate, zOrder) {
+        this._super(level, xPos, yPos, scaleRate, zOrder);
         this._flyable = false;
 
         cc.spriteFrameCache.addSpriteFrames(this._plist, this._png);
@@ -68,13 +71,14 @@ var WalkingMonster = Monster.extend({
 });
 
 var Assassin = WalkingMonster.extend({
-    ctor: function(xPos, yPos, scaleRate, zOrder) {
+    ctor: function(level, xPos, yPos, scaleRate, zOrder) {
         this._plist = monster_res.assassin_plist;
         this._png = monster_res.assassin_png;
         this._anim_plist = monster_res.assassin_anim_plist;
         zOrder = zOrder || 20;
-        this._maxHP = 2;
-        this._super(xPos, yPos, scaleRate, zOrder);
+        this._super(level, xPos, yPos, scaleRate, zOrder);
+        this._maxHP = 2*this._level;
+        this._HP = this._maxHP;
         this._speed = 2*this._speed;
     },
     getFileName: function() {
@@ -82,12 +86,13 @@ var Assassin = WalkingMonster.extend({
     }
 });
 var DarkGiant = WalkingMonster.extend({
-    ctor: function(xPos, yPos, scaleRate, zOrder) {
+    ctor: function(level, xPos, yPos, scaleRate, zOrder) {
         this._plist = monster_res.dark_giant_plist;
         this._png = monster_res.dark_giant_png;
         this._anim_plist = monster_res.dark_giant_anim_plist;
-        this._maxHP = 10;
-        this._super(xPos, yPos, scaleRate, zOrder);
+        this._super(level, xPos, yPos, scaleRate, zOrder);
+        this._maxHP = 10*this._level;
+        this._HP = this._maxHP;
         this._speed = 1*this._speed;
     },
     getFileName: function() {
@@ -95,12 +100,13 @@ var DarkGiant = WalkingMonster.extend({
     }
 });
 var Iceman = WalkingMonster.extend({
-    ctor: function(xPos, yPos, scaleRate, zOrder) {
+    ctor: function(level, xPos, yPos, scaleRate, zOrder) {
         this._plist = monster_res.iceman_plist;
         this._png = monster_res.iceman_png;
         this._anim_plist = monster_res.iceman_anim_plist;
-        this._maxHP = 5;
-        this._super(xPos, yPos, scaleRate, zOrder);
+        this._super(level, xPos, yPos, scaleRate, zOrder);
+        this._maxHP = 5*this._level;
+        this._HP = this._maxHP;
         this._speed = 1.4*this._speed;
     },
     getFileName: function() {
@@ -110,8 +116,8 @@ var Iceman = WalkingMonster.extend({
 
 
 var FlyingMonster = Monster.extend({
-    ctor: function(xPos, yPos, scaleRate, zOrder) {
-        this._super(xPos, yPos, scaleRate, zOrder);
+    ctor: function(level, xPos, yPos, scaleRate, zOrder) {
+        this._super(level, xPos, yPos, scaleRate, zOrder);
         this._flyable = true;
 
         cc.spriteFrameCache.addSpriteFrames(this._plist, this._png);
@@ -142,13 +148,14 @@ var FlyingMonster = Monster.extend({
 });
 
 var Bat = FlyingMonster.extend({
-    ctor: function(xPos, yPos, scaleRate, zOrder) {
+    ctor: function(level, xPos, yPos, scaleRate, zOrder) {
         this._plist = monster_res.bat_plist;
         this._png = monster_res.bat_png;
         this._anim_plist = monster_res.bat_anim_plist;
         zOrder = zOrder || 25;
-        this._maxHP = 1;
-        this._super(xPos, yPos, scaleRate, zOrder);
+        this._super(level, xPos, yPos, scaleRate, zOrder);
+        this._maxHP = 1*this._level;
+        this._HP = this._maxHP;
         this._speed = 2.2*this._speed;
     },
     getFileName: function() {

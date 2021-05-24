@@ -35,6 +35,7 @@ var ScreenBattle = cc.Layer.extend({
         this.score = 0; // diệt quái tăng điểm
         this.gameState = 0;
         this.buildCooldown = 0; // cooldown để có thể xây dựng tháp
+        this.level = 1; // level sẽ tăng dần sau mỗi 30s, level càng cao thì máu của quái càng nhiều
 
         this.initTheGame();
 
@@ -110,17 +111,23 @@ var ScreenBattle = cc.Layer.extend({
         this.houseHPBox.setFontSize(this.scrSize.width/30);
         this.addChild(this.houseHPBox);
         // display score
-        this.addSprite(battle_res.common_icon_trophy, this.scrSize.width*0.05, this.scrSize.height*0.95, 1, this.SCALE_RATE*0.25);
-        this.scoreBox = gv.commonText(this.score, this.scrSize.width*0.1, this.scrSize.height*0.95);
+        this.addSprite(battle_res.common_icon_trophy, this.scrSize.width*0.05, this.scrSize.height*0.97, 1, this.SCALE_RATE*0.25);
+        this.scoreBox = gv.commonText(this.score, this.scrSize.width*0.1, this.scrSize.height*0.97);
         this.scoreBox.setLocalZOrder(20);
         this.scoreBox.setFontSize(this.scrSize.width/30);
         this.addChild(this.scoreBox);
-        // display score
-        this.addSprite(battle_res.guitime_sheet0, this.scrSize.width*0.05, this.scrSize.height*0.9, 1, this.SCALE_RATE*0.5);
-        this.cooldownBox = gv.commonText(this.buildCooldown, this.scrSize.width*0.1, this.scrSize.height*0.9);
+        // display cooldown
+        this.addSprite(battle_res.guitime_sheet0, this.scrSize.width*0.05, this.scrSize.height*0.92, 1, this.SCALE_RATE*0.5);
+        this.cooldownBox = gv.commonText(this.buildCooldown, this.scrSize.width*0.1, this.scrSize.height*0.92);
         this.cooldownBox.setLocalZOrder(20);
         this.cooldownBox.setFontSize(this.scrSize.width/30);
         this.addChild(this.cooldownBox);
+        // display level
+        this.addSprite(battle_res.miniature_boss_golem, this.scrSize.width*0.05, this.scrSize.height*0.87, 1, this.SCALE_RATE*0.1);
+        this.levelBox = gv.commonText(this.level, this.scrSize.width*0.1, this.scrSize.height*0.87);
+        this.levelBox.setLocalZOrder(20);
+        this.levelBox.setFontSize(this.scrSize.width/30);
+        this.addChild(this.levelBox);
     },
     generateTopographic:function()
     {
@@ -184,6 +191,12 @@ var ScreenBattle = cc.Layer.extend({
             if (cThis.gameState != 2)
                 cThis.addNewMonster();
         }, 2000);
+        var levelInterval = setInterval(function () {
+            if (cThis.gameState === 1){
+                cThis.level++;
+                cThis.levelBox.setString(cThis.level);
+            }
+        }, 30000);
     },
     addNewMonster: function() {
         var monst;
@@ -191,18 +204,19 @@ var ScreenBattle = cc.Layer.extend({
         var monsterType = this._utility.randomInt(1,4);//(1,4)
         var xPos = this._utility.convertCellIndexToCoord(monsterPos).x;
         var yPos = this._utility.convertCellIndexToCoord(monsterPos).y;
+        const cThis = this;
         switch (monsterType) {
             case 1: 
-                monst = new Assassin(xPos, yPos, this.SCALE_RATE);
+                monst = new Assassin(cThis.level, xPos, yPos, this.SCALE_RATE);
                 break;
             case 2: 
-                monst = new DarkGiant(xPos, yPos, this.SCALE_RATE);
+                monst = new DarkGiant(cThis.level, xPos, yPos, this.SCALE_RATE);
                 break;
             case 3: 
-                monst = new Iceman(xPos, yPos, this.SCALE_RATE);
+                monst = new Iceman(cThis.level, xPos, yPos, this.SCALE_RATE);
                 break;
             case 4: 
-                monst = new Bat(xPos, yPos, this.SCALE_RATE);
+                monst = new Bat(cThis.level, xPos, yPos, this.SCALE_RATE);
                 break;
         }
         this.addChild(monst._img);
@@ -329,7 +343,7 @@ var ScreenBattle = cc.Layer.extend({
                             var tower = new Tower(centerX, centerY, 15, cThis.SCALE_RATE);
                             cThis.obstacles.push(tower);
                             cThis.addChild(tower._img);
-                            cThis.buildCooldown = 30;
+                            cThis.buildCooldown = 20;
                         }
                     })
                 }

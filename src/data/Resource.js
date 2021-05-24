@@ -147,6 +147,7 @@ var sound_res = {   // not use
 var battle_res = {
     common_icon_trophy: "assests/game/common/common_icon_trophy.png",
     guitime_sheet0: "assests/game/golddigger/images/guitime-sheet0.png",
+    miniature_boss_golem: "assests/game/card/miniature_boss_golem.png",
 
 	map_background_0000 : "assests/game/map/map_background_0000.png",
 	map_background_0003 : "assests/game/map/map_background_0003.png",
