@@ -10,6 +10,10 @@ var Monster = ccui.Widget.extend({
 
         this._flyable = null;
         this._speed = 10;
+        this._move_right_animation = null;
+        this._move_left_animation = null;
+        this._move_up_animation = null;
+        this._move_down_animation = null;
     },
 
     getFileName: function() {
@@ -18,12 +22,10 @@ var Monster = ccui.Widget.extend({
 
     moveDown: function() {
         this._img.runAction(cc.moveBy(1, 0, -this._speed*1));
-        return "";
     },
 
     moveRight: function() {
         this._img.runAction(cc.moveBy(1, this._speed*1, 0));
-        return "";
     }
 });
 
@@ -31,16 +33,41 @@ var WalkingMonster = Monster.extend({
     ctor: function(xPos, yPos, zOrder, scaleRate) {
         this._super(xPos, yPos, zOrder, scaleRate);
         this._flyable = false;
-    },
+    }
 });
 
 var Assassin = WalkingMonster.extend({
     ctor: function(xPos, yPos, zOrder, scaleRate) {
         this._super(xPos, yPos, zOrder, scaleRate);
         this._speed = 20;
+
+        cc.spriteFrameCache.addSpriteFrames(monster_assassin_res.assassin_plist, monster_assassin_res.assassin_png);
+        cc.animationCache.addAnimations(monster_assassin_res.assassin_anim_plist);
+
+		this._move_down_animation = cc.animationCache.getAnimation("move_down");
+        this._move_down_animation.setLoops(-1);
+		this._move_down_action = cc.animate(this._move_down_animation);
+        this._move_down_action.retain();
+
+        this._move_right_animation = cc.animationCache.getAnimation("move_right");
+        this._move_right_animation.setLoops(-1);
+		this._move_right_action = cc.animate(this._move_right_animation);
+        this._move_right_action.retain();
     },
     getFileName: function() {
         return battle_res.monster_assassin_run_0000;
+    },
+    moveDown: function() {
+        this._super();
+        this._img.stopAction(this._move_down_action);
+        this._img.runAction(this._move_down_action);
+    },
+
+    moveRight: function() {
+        this._super();
+        this._img.stopAction(this._move_down_action);
+        this._img.stopAction(this._move_right_action);
+        this._img.runAction(this._move_right_action);
     }
 });
 var DarkGiant = WalkingMonster.extend({
