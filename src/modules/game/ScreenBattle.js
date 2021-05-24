@@ -264,7 +264,7 @@ var ScreenBattle = cc.Layer.extend({
                     if ( distance < 150) {
                         monst.getHit();
                         tower.fire(xMons, yMons, cThis);
-                        if (monst._HP <= 0) {   // monster was killed
+                        if (monst._HP <= 0 && cThis.gameState != 2) {   // monster was killed
                             cThis.score += monst._maxHP;
                             cThis.scoreBox.setString(cThis.score);
                             cThis.removeChild(monst._img,true);
