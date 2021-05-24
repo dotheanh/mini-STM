@@ -32,6 +32,15 @@ var Monster = ccui.Widget.extend({
         this._img.runAction(cc.moveBy(1, this._speed*1, 0));
     },
 
+    jumpRight: function() {cc.log("jump")
+        this._img.runAction(
+            cc.sequence(cc.scaleBy(0.1, 1.2),
+            cc.moveBy(0.5, this._speed*1/2, 40),
+            cc.moveBy(0.5, this._speed*1/2, -40),
+            cc.scaleBy(0.1, 0.8333))
+            );
+    },
+
     getHit: function() {
         this._HP--;
         this._img.runAction(cc.sequence(cc.scaleBy(0.1, 0.9), cc.fadeOut(0.2), cc.fadeIn(0.2),cc.scaleBy(0.1, 1.1)));

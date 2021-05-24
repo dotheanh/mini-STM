@@ -231,14 +231,19 @@ var ScreenBattle = cc.Layer.extend({
             if (!cThis._utility.reachHousePoint(xPos, yPos)) { // quái chưa đến nhà chính
                 // move                
                 if (!monst._flyable) {  // Todo: check collision
+                    // try to move down, if can't, try to move right
                     if(!cThis.checkTouchObstacle(xPos, yPos-5)) {
                         monst.moveDown(100);
                     }
                     else {
                         monst.moveRight(100);
+                        if(!cThis.checkAboveObstacle(xPos+40, yPos)) {
+                            monst.moveRight(100);
+                        }
+                        else {
+                            monst.jumpRight(100);
+                        }
                     }
-                    // try to move down, if can't, try to move right
-                    //if ()
                 }
                 else {
                     monst.moveDown(100);
@@ -265,6 +270,18 @@ var ScreenBattle = cc.Layer.extend({
             centerY = this._utility.convertCellIndexToCoord(obs).y;
             if (centerX - this.cellSize <= xPos && xPos <= centerX + this.cellSize &&
                 centerY - this.cellSize <= yPos && yPos <= centerY + this.cellSize) {
+                isTouch = true;
+            }
+        })
+        return isTouch;
+    },
+    checkAboveObstacle: function(xPos, yPos)   {
+        var isTouch = false;
+        this.obstaclePos.forEach((obs, index) => {
+            centerX = this._utility.convertCellIndexToCoord(obs).x;
+            centerY = this._utility.convertCellIndexToCoord(obs).y;
+            if (centerX - this.cellSize/1.7 <= xPos && xPos <= centerX + this.cellSize/1.7 &&
+                centerY - this.cellSize/1.7 <= yPos && yPos <= centerY + this.cellSize/1.7) {
                 isTouch = true;
             }
         })

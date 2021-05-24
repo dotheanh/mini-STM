@@ -8,7 +8,7 @@ _ Quái sẽ xuất hiện ngẫu nhiên sau mỗi 2 giây, gồm 4 loại:
 + Quái sát thủ: quái đi bộ, nhanh nhẹn nhưng máu hơi yếu
 + Quái băng: quái đi bộ, tốc độ và máu ở mức trung bình
 + Quái đá: quái đi bộ, tốc độ chậm nhưng rất trâu bò
-_ Quái sẽ tìm đường đi đến và tấn công nhà chính. Tuy nhiên, thuật toán tìm đường của quái có vấn đề nên đôi khi quái sẽ có thêm khả năng đi xuyên vật cản :)))
+_ Quái sẽ tìm đường đi đến và tấn công nhà chính. Tuy nhiên, thuật toán tìm đường của quái không đủ thông minh nên đôi khi quái sẽ có thêm khả năng nhảy qua vật cản
 
 _ Người chơi có thể đặt trụ bắn bên trên một vật cản bằng cách click vào vật cản đó, thời gian cool down là 20s
 ** Có thể xảy ra trường hợp người chơi đặt 2 trụ chồng lên nhau => trường hợp này có thể xem như... trụ đã được cường hóa và nhân đôi sát thương
