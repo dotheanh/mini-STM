@@ -34,6 +34,7 @@ var ScreenBattle = cc.Layer.extend({
         this.houseHP = 10;   // HP = 0 thì thua
         this.score = 0; // diệt quái tăng điểm
         this.gameState = 0;
+        this.buildCooldown = 0; // cooldown để có thể xây dựng tháp
 
         this.initTheGame();
 
@@ -109,11 +110,17 @@ var ScreenBattle = cc.Layer.extend({
         this.houseHPBox.setFontSize(this.scrSize.width/30);
         this.addChild(this.houseHPBox);
         // display score
-        this.addSprite(battle_res.common_icon_trophy, this.scrSize.width*0.05, this.scrSize.height*0.95, 1, this.SCALE_RATE*0.5);
+        this.addSprite(battle_res.common_icon_trophy, this.scrSize.width*0.05, this.scrSize.height*0.95, 1, this.SCALE_RATE*0.25);
         this.scoreBox = gv.commonText(this.score, this.scrSize.width*0.1, this.scrSize.height*0.95);
         this.scoreBox.setLocalZOrder(20);
         this.scoreBox.setFontSize(this.scrSize.width/30);
         this.addChild(this.scoreBox);
+        // display score
+        this.addSprite(battle_res.guitime_sheet0, this.scrSize.width*0.05, this.scrSize.height*0.9, 1, this.SCALE_RATE*0.5);
+        this.cooldownBox = gv.commonText(this.buildCooldown, this.scrSize.width*0.1, this.scrSize.height*0.9);
+        this.cooldownBox.setLocalZOrder(20);
+        this.cooldownBox.setFontSize(this.scrSize.width/30);
+        this.addChild(this.cooldownBox);
     },
     generateTopographic:function()
     {
@@ -123,7 +130,7 @@ var ScreenBattle = cc.Layer.extend({
         const cThis = this;
         for (var i = 0; i < this.obstacleCount; i++) {
             var obst;
-            var obstacleType = this._utility.randomInt(2,4);
+            var obstacleType = this._utility.randomInt(2,3);
             var xPos = this._utility.convertCellIndexToCoord(this.obstaclePos[i]).x;
             var yPos = this._utility.convertCellIndexToCoord(this.obstaclePos[i]).y;
             switch (obstacleType) {
@@ -133,9 +140,9 @@ var ScreenBattle = cc.Layer.extend({
                 case 3: 
                     obst = new Rock(xPos, yPos, 1, cThis.SCALE_RATE);
                     break;
-                case 4: 
-                    obst = new Tower(xPos, yPos, 15, cThis.SCALE_RATE);
-                    break;
+                // case 4: 
+                //     obst = new Tower(xPos, yPos, 15, cThis.SCALE_RATE);
+                //     break;
             }
             cThis.obstacles.push(obst);
             cThis.addChild(obst._img);
@@ -285,6 +292,15 @@ var ScreenBattle = cc.Layer.extend({
         var intervalFire = setInterval(function () {
             cThis.fireTower();
         }, 1200);
+        var intervalBuild = setInterval(function () {
+            //cThis.buildCooldown--;
+            if (cThis.gameState === 1) {
+                cThis.cooldownBox.setString(cThis.buildCooldown);
+                if (cThis.buildCooldown > 0) {
+                    cThis.buildCooldown--;
+                }
+            }
+        }, 1000);
     },
     onGameOver: function() {
         this.gameState = 2;
@@ -299,6 +315,24 @@ var ScreenBattle = cc.Layer.extend({
         cc.eventManager.addListener({
             event: cc.EventListener.TOUCH_ONE_BY_ONE,
             onTouchBegan: function(touch, event){
+                var xPos = touch.getLocation().x;
+                var yPos = touch.getLocation().y;
+                if (cThis.gameState === 1 && cThis.buildCooldown === 0) {
+                    // build tower at obstacle place
+                    cThis.obstaclePos.forEach((obs, index) => {
+                        centerX = cThis._utility.convertCellIndexToCoord(obs).x;
+                        centerY = cThis._utility.convertCellIndexToCoord(obs).y;
+                        if (centerX - cThis.cellSize/2 <= xPos && xPos <= centerX + cThis.cellSize/2 &&
+                            centerY - cThis.cellSize/2 <= yPos && yPos <= centerY + cThis.cellSize/2) {
+                            cThis.obstacles.splice(index, 1);
+                            //cThis.removeChild(obs._img,true);
+                            var tower = new Tower(centerX, centerY, 15, cThis.SCALE_RATE);
+                            cThis.obstacles.push(tower);
+                            cThis.addChild(tower._img);
+                            cThis.buildCooldown = 30;
+                        }
+                    })
+                }
                 if (cThis.gameState === 2) {
                     // restart game
                     fr.view(ScreenBattle);
