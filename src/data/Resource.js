@@ -209,3 +209,17 @@ var tower_res = {
 	tower_ice_gun_attack_0_png : "assests/animation/tower_ice/tower_ice_gun_attack_0.png",
 	tower_ice_gun_attack_0_anim_plist : "assests/animation/tower_ice/tower_ice_gun_attack_0_anim.plist",
 };
+
+
+var battle_sound = {
+    char_crow_fireball_explosion : "assests/game/sound/char_crow_fireball_explosion.mp3",
+    ingame_maintower_hit : "assests/game/sound/ingame_maintower_hit.mp3",
+    ingame_button : "assests/game/sound/ingame_button.mp3",
+    ingame_next_wave : "assests/game/sound/ingame_next_wave.mp3",
+    ingame_place_tower : "assests/game/sound/ingame_place_tower.mp3",
+    monster_die_bat : "assests/game/sound/monster_die_bat.mp3",
+    monster_die_assassin : "assests/game/sound/monster_die_assassin.mp3",
+    monster_die_boss : "assests/game/sound/monster_die_boss.mp3",
+    monster_die_giant : "assests/game/sound/monster_die_giant.mp3",
+    theme_battle : "assests/game/sound/theme_battle.mp3"
+}

@@ -193,6 +193,7 @@ var ScreenBattle = cc.Layer.extend({
         }, 2000);
         var levelInterval = setInterval(function () {
             if (cThis.gameState === 1){
+                cThis.checkSystemAndPlaySound(battle_sound.ingame_next_wave);
                 cThis.level++;
                 cThis.levelBox.setString(cThis.level);
             }
@@ -251,9 +252,10 @@ var ScreenBattle = cc.Layer.extend({
                 }
             }
             else {  // reach the house
-                if (this.gameState === 1) {
+                if (cThis.gameState === 1) {
                     cThis.houseHP--;
-                    this.houseHPBox.setString(cThis.houseHP);
+                    cThis.checkSystemAndPlaySound(battle_sound.ingame_maintower_hit);
+                    cThis.houseHPBox.setString(cThis.houseHP);
                     cThis.monsters.splice(index, 1);
                     cThis.removeChild(monst._img, true);
                     if (cThis.houseHP <= 0) cThis.onGameOver();
@@ -302,7 +304,18 @@ var ScreenBattle = cc.Layer.extend({
                     if ( distance < 150) {
                         monst.getHit();
                         tower.fire(xMons, yMons, cThis);
+                        cThis.checkSystemAndPlaySound(battle_sound.char_crow_fireball_explosion);
                         if (monst._HP <= 0 && cThis.gameState != 2) {   // monster was killed
+                            switch (monst._type) {
+                                case 1: 
+                                    cThis.checkSystemAndPlaySound(battle_sound.monster_die_assassin); break;
+                                case 2: 
+                                    cThis.checkSystemAndPlaySound(battle_sound.monster_die_giant); break;
+                                case 3: 
+                                    cThis.checkSystemAndPlaySound(battle_sound.monster_die_boss); break;
+                                case 4: 
+                                    cThis.checkSystemAndPlaySound(battle_sound.monster_die_bat); break;
+                            }
                             cThis.score += monst._maxHP;
                             cThis.scoreBox.setString(cThis.score);
                             cThis.removeChild(monst._img,true);
@@ -315,6 +328,8 @@ var ScreenBattle = cc.Layer.extend({
     },
     onStartGame:function()
     {
+        if (this.sound)
+            cc.audioEngine.playEffect(battle_sound.theme_battle, true);
         this.gameState = 1;
         const cThis = this;
         var intervalMove = setInterval(function () {
@@ -355,6 +370,7 @@ var ScreenBattle = cc.Layer.extend({
                         centerY = cThis._utility.convertCellIndexToCoord(obs).y;
                         if (centerX - cThis.cellSize/2 <= xPos && xPos <= centerX + cThis.cellSize/2 &&
                             centerY - cThis.cellSize/2 <= yPos && yPos <= centerY + cThis.cellSize/2) {
+                            cThis.checkSystemAndPlaySound(battle_sound.ingame_place_tower);
                             cThis.obstacles.splice(index, 1);
                             //cThis.removeChild(obs._img,true);
                             var tower = new Tower(centerX, centerY, 15, cThis.SCALE_RATE);
@@ -366,6 +382,7 @@ var ScreenBattle = cc.Layer.extend({
                 }
                 if (cThis.gameState === 2) {
                     // restart game
+                    cThis.checkSystemAndPlaySound(battle_sound.ingame_button);
                     fr.view(ScreenBattle);
                 }
                 return true;
@@ -373,11 +390,10 @@ var ScreenBattle = cc.Layer.extend({
         }, this);
         
     },
-    checkSystemAndPlaySound: function(soundName, isLoop = false) {
-        var soundFile_ogg = "assests/game/golddigger/media/" + soundName + ".ogg";
-        var soundFile_mp3 = "assests/game/golddigger/media/" + soundName + ".mp3";
+    checkSystemAndPlaySound: function(soundName, isLoop) {
+        isLoop = isLoop || false;
         if (this.sound)
-            cc.audioEngine.playMusic(cc.sys.os == cc.sys.OS_WP8 || cc.sys.os == cc.sys.OS_WINRT ? soundFile_ogg : soundFile_mp3, isLoop);
+            cc.audioEngine.playEffect(soundName, isLoop);
     },
     addSprite: function(resource, xPos, yPos, zOrder, scaleRate) {
         zOrder = zOrder || 0;

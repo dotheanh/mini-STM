@@ -89,6 +89,7 @@ var Assassin = WalkingMonster.extend({
         this._maxHP = 2*this._level;
         this._HP = this._maxHP;
         this._speed = 2*this._speed;
+        this._type = 1;
     },
     getFileName: function() {
         return battle_res.monster_assassin_run_0000;
@@ -103,6 +104,7 @@ var DarkGiant = WalkingMonster.extend({
         this._maxHP = 10*this._level;
         this._HP = this._maxHP;
         this._speed = 1*this._speed;
+        this._type = 2;
     },
     getFileName: function() {
         return battle_res.monster_dark_giant_run_0000;
@@ -117,6 +119,7 @@ var Iceman = WalkingMonster.extend({
         this._maxHP = 5*this._level;
         this._HP = this._maxHP;
         this._speed = 1.4*this._speed;
+        this._type = 3;
     },
     getFileName: function() {
         return battle_res.monster_iceman_run_0000;
@@ -166,6 +169,7 @@ var Bat = FlyingMonster.extend({
         this._maxHP = 1*this._level;
         this._HP = this._maxHP;
         this._speed = 2.2*this._speed;
+        this._type = 4;
     },
     getFileName: function() {
         return battle_res.monster_bat_run_0000;
