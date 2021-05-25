@@ -329,7 +329,7 @@ var ScreenBattle = cc.Layer.extend({
     onStartGame:function()
     {
         if (this.sound)
-            cc.audioEngine.playEffect(battle_sound.theme_battle, true);
+            cc.audioEngine.playMusic(battle_sound.theme_battle, true);
         this.gameState = 1;
         const cThis = this;
         var intervalMove = setInterval(function () {
@@ -350,7 +350,6 @@ var ScreenBattle = cc.Layer.extend({
     },
     onGameOver: function() {
         this.gameState = 2;
-        this.checkSystemAndPlaySound("gameover");
         // text Game over
         this.txtGameOver = this.addSprite(battle_res.textgameover_sheet0, this.scrSize.width/2, this.scrSize.height/2, 15);
         this.txtGameOver.runAction(cc.repeat(cc.sequence(cc.scaleBy(1.5, 1.1),cc.scaleBy(1.5, 0.9)),3));
