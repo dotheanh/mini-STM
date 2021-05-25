@@ -296,6 +296,7 @@ var ScreenBattle = cc.Layer.extend({
                 var tower = cThis.obstacles[index];
                 var xPos = tower._img.getPositionX();
                 var yPos = tower._img.getPositionY();
+                var playedSoundEffect = false;
                 // destroy các quái trong bán kính nổ
                 cThis.monsters.forEach((monst, index) => {
                     xMons = monst._img.getPositionX();
@@ -304,7 +305,10 @@ var ScreenBattle = cc.Layer.extend({
                     if ( distance < 150) {
                         monst.getHit();
                         tower.fire(xMons, yMons, cThis);
-                        cThis.checkSystemAndPlaySound(battle_sound.char_crow_fireball_explosion);
+                        if (playedSoundEffect === false) {
+                            cThis.checkSystemAndPlaySound(battle_sound.char_crow_fireball_explosion);
+                            playedSoundEffect = true;
+                        }
                         if (monst._HP <= 0 && cThis.gameState != 2) {   // monster was killed
                             switch (monst._type) {
                                 case 1: 
@@ -370,7 +374,7 @@ var ScreenBattle = cc.Layer.extend({
                         if (centerX - cThis.cellSize/2 <= xPos && xPos <= centerX + cThis.cellSize/2 &&
                             centerY - cThis.cellSize/2 <= yPos && yPos <= centerY + cThis.cellSize/2) {
                             cThis.checkSystemAndPlaySound(battle_sound.ingame_place_tower);
-                            cThis.obstacles.splice(index, 1);
+                            //cThis.obstacles.splice(index, 1);
                             //cThis.removeChild(obs._img,true);
                             var tower = new Tower(centerX, centerY, 15, cThis.SCALE_RATE);
                             cThis.obstacles.push(tower);
